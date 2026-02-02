@@ -3,22 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
 #include "GameFramework/Actor.h"
-#include "SpawnManager.generated.h"
-
-class AGridComponent;
+#include "GridComponent.generated.h"
 
 UCLASS()
-class ASpawnManager : public AActor
+class AGridComponent : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ASpawnManager();
-	UFUNCTION(BlueprintCallable) void SpawnGrid();
-	UPROPERTY(EditAnywhere, Category = "Grid Component") TSubclassOf<AGridComponent> gridComponentToSpawn;
+	AGridComponent();
+	//size of scale x,y
+	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileWidth = 1;
+	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileHeight = 0.25;
+	UFUNCTION(BlueprintCallable) void SetTileScale();
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,4 +26,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 };

@@ -1,35 +1,33 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Core/Systems/Managers/SpawnManager.h"
-
 #include "Core/GameObjects/GridComponent.h"
 
 // Sets default values
-ASpawnManager::ASpawnManager()
+AGridComponent::AGridComponent()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
 }
 
 // Called when the game starts or when spawned
-void ASpawnManager::BeginPlay()
+void AGridComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	SpawnGrid();
+	SetTileScale();
+	
 }
 
 // Called every frame
-void ASpawnManager::Tick(float DeltaTime)
+void AGridComponent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-void ASpawnManager::SpawnGrid()
+void AGridComponent::SetTileScale()
 {
-	AGridComponent* createdSpawnManager = GetWorld()->SpawnActor<AGridComponent>
-		(gridComponentToSpawn, FVector (0.f, 0.f, 0.f), FRotator::ZeroRotator  );
-	UE_LOG(LogTemp, Warning, TEXT("Created Grid Component"));
+	SetActorScale3D(FVector(tileWidth, tileWidth, tileHeight));
 }
 
