@@ -2,8 +2,7 @@
 
 
 #include "Core/Systems/Managers/SpawnManager.h"
-
-#include "Core/GameObjects/GridComponent.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values
 ASpawnManager::ASpawnManager()
@@ -16,6 +15,7 @@ ASpawnManager::ASpawnManager()
 void ASpawnManager::BeginPlay()
 {
 	Super::BeginPlay();
+	GridArray.Reserve(10); 
 	SpawnGrid();
 }
 
@@ -23,13 +23,50 @@ void ASpawnManager::BeginPlay()
 void ASpawnManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ASpawnManager::SpawnGrid()
 {
-	AGridComponent* createdSpawnManager = GetWorld()->SpawnActor<AGridComponent>
-		(gridComponentToSpawn, FVector (0.f, 0.f, 0.f), FRotator::ZeroRotator  );
-	UE_LOG(LogTemp, Warning, TEXT("Created Grid Component"));
+	float rowSize = GridTiles / GridHeight;
+	float compareNum = 1;
+	float colorNum = 1;
+	
+	FVector spawnPos = FVector(0.f, 0.f, 0.f);
+	for (float i = 1; i <= GridTiles; i++)
+	{
+		UStaticMeshComponent* gridMesh = Cast<UStaticMeshComponent>(gridComponentToSpawn);
+		
+		/*if (FMath::Fmod(colorNum, 2) == 0 )
+		{
+			gridMesh->SetMaterial(0, BlackColor);
+		}
+		else
+		{
+			gridMesh->SetMaterial(0, WhiteColor);
+		}*/
+		
+		
+		
+		
+		if ( (i / rowSize) == compareNum)
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("%f"),rowSize);
+			//UE_LOG(LogTemp, Warning, TEXT("%f"),i);
+			AActor* createdGrid = GetWorld()->SpawnActor<AActor>
+				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator  );
+			spawnPos.Y += 100;
+			spawnPos.X = 0;
+			GridArray.Add(createdGrid);
+			compareNum++;
+		}
+		else
+		{
+			AActor* createdGrid = GetWorld()->SpawnActor<AActor>
+				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator  );
+			spawnPos.X += 100;
+			GridArray.Add(createdGrid);
+		}
+	}
+	
 }
 

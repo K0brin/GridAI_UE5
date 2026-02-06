@@ -22,6 +22,6 @@ public:
 	UGameManager();
 	UFUNCTION(BlueprintCallable) void CreateSpawnManager();
 	UFUNCTION(BlueprintCallable) void DeleteSpawnManager();
-	UPROPERTY(EditAnywhere, Category = "Managers") TSubclassOf<ASpawnManager> spawnManagerToSpawn;
+	UPROPERTY(EditAnywhere, Category = "Managers") TSubclassOf<AActor> spawnManagerToSpawn;
 	
 };

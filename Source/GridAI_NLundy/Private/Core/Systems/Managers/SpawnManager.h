@@ -18,7 +18,12 @@ public:
 	// Sets default values for this actor's properties
 	ASpawnManager();
 	UFUNCTION(BlueprintCallable) void SpawnGrid();
-	UPROPERTY(EditAnywhere, Category = "Grid Component") TSubclassOf<AGridComponent> gridComponentToSpawn;
+	UPROPERTY(EditAnywhere, Category = "Grid Component") TSubclassOf<AActor> gridComponentToSpawn;
+	UPROPERTY(EditAnywhere) TArray<AActor*> GridArray;
+	UPROPERTY(EditAnywhere) float GridTiles = 10;
+	UPROPERTY(EditAnywhere) float GridHeight = 2;
+	UPROPERTY(EditAnywhere) UMaterial* BlackColor;
+	UPROPERTY(EditAnywhere) UMaterial* WhiteColor;
 
 protected:
 	// Called when the game starts or when spawned

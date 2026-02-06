@@ -17,7 +17,7 @@ void UGameManager::Init()
 
 void UGameManager::CreateSpawnManager()
 {
-	ASpawnManager* createdSpawnManager = GetWorld()->SpawnActor<ASpawnManager>
+	AActor* createdSpawnManager = GetWorld()->SpawnActor<AActor>
 		(spawnManagerToSpawn, FVector (0.f, 0.f, 0.f), FRotator::ZeroRotator  );
 	UE_LOG(LogTemp, Warning, TEXT("CreatedSpawnManager"));
 }
