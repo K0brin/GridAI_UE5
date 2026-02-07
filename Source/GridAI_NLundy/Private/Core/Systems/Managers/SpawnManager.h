@@ -17,13 +17,25 @@ class ASpawnManager : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ASpawnManager();
-	UFUNCTION(BlueprintCallable) void SpawnGrid();
-	UPROPERTY(EditAnywhere, Category = "Grid Component") TSubclassOf<AActor> gridComponentToSpawn;
-	UPROPERTY(EditAnywhere) TArray<AActor*> GridArray;
-	UPROPERTY(EditAnywhere) float GridTiles = 10;
-	UPROPERTY(EditAnywhere) float GridHeight = 2;
-	UPROPERTY(EditAnywhere) UMaterial* BlackColor;
-	UPROPERTY(EditAnywhere) UMaterial* WhiteColor;
+	
+	//_________________________________________GRID_SPAWNING___________________________________________
+	UFUNCTION(BlueprintCallable, Category = "Grid_Spawning") void SpawnGrid();
+	UFUNCTION(BlueprintCallable, Category = "Grid_Spawning") void ChangeColor(AActor* actorToChange);
+	UPROPERTY(EditAnywhere, Category = "Grid_Spawning") TSubclassOf<AActor> gridComponentToSpawn;
+	UPROPERTY(EditAnywhere, Category = "Grid_Spawning") TArray<AActor*> GridArray;
+	UPROPERTY(EditAnywhere, Category = "Grid_Spawning") float GridTiles = 260;
+	UPROPERTY(EditAnywhere, Category = "Grid_Spawning") float GridHeight = 20;
+	UPROPERTY() float ColorNum = 1;
+	UPROPERTY(EditAnywhere, Category = "Grid_Spawning") UMaterialInterface* BlackColor;
+	UPROPERTY(EditAnywhere, Category = "Grid_Spawning") UMaterialInterface* WhiteColor;
+	
+	//________________________________________ENEMY_SPAWNING_______________________________________________
+	UFUNCTION(BlueprintCallable, Category = "Enemy_Spawning") void SpawnEnemies();
+	UPROPERTY(EditAnywhere, Category = "Enemy_Spawning") TSubclassOf<AActor> EnemyToSpawn;
+	UPROPERTY(EditAnywhere, Category = "Enemy_Spawning") int NumberSpawned;
+	UPROPERTY(EditAnywhere, Category = "Enemy_Spawning") TArray<AActor*> EnemyArray;
+	
+	
 
 protected:
 	// Called when the game starts or when spawned
