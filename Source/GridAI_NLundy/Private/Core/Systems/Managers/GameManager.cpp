@@ -3,6 +3,9 @@
 
 #include "Core/Systems/Managers/GameManager.h"
 
+#include "SpawnManager.h"
+#include "TurnManager.h"
+
 UGameManager::UGameManager()
 {
 	
@@ -13,17 +16,27 @@ void UGameManager::Init()
 	Super::Init();
 	
 	CreateSpawnManager();
+	CreateTurnManager();
 }
 
 void UGameManager::CreateSpawnManager()
 {
-	AActor* createdSpawnManager = GetWorld()->SpawnActor<AActor>
-		(spawnManagerToSpawn, FVector (0.f, 0.f, 0.f), FRotator::ZeroRotator  );
+	ActiveSpawnManager = GetWorld()->SpawnActor<ASpawnManager>(spawnManagerToSpawn, FVector (0.f, 0.f, 0.f), FRotator::ZeroRotator  );
 	UE_LOG(LogTemp, Warning, TEXT("CreatedSpawnManager"));
 }
 
 void UGameManager::DeleteSpawnManager()
 {
 	
+}
+
+void UGameManager::CreateTurnManager()
+{
+	ActiveTurnManager = GetWorld()->SpawnActor<ATurnManager>(turnManagerToSpawn, FVector (0.f, 0.f, 0.f), FRotator::ZeroRotator  );
+	UE_LOG(LogTemp, Warning, TEXT("CreatedTurnManager"));
+}
+
+void UGameManager::DeleteTurnManager()
+{
 }
 

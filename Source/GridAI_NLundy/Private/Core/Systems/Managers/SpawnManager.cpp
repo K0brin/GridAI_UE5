@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Core/GameObjects/Enemy.h"
 #include "Core/GameObjects/GridComponent.h"
+#include "Core/GameObjects/MainCharacter.h"
 
 // Sets default values
 ASpawnManager::ASpawnManager()
@@ -13,6 +14,7 @@ ASpawnManager::ASpawnManager()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+
 // Called when the game starts or when spawned
 void ASpawnManager::BeginPlay()
 {
@@ -20,6 +22,7 @@ void ASpawnManager::BeginPlay()
 	ColorNum = 1.f;
 	SpawnGrid();
 	SpawnEnemies();
+	SpawnPlayer();
 }
 
 // Called every frame
@@ -30,42 +33,44 @@ void ASpawnManager::Tick(float DeltaTime)
 
 void ASpawnManager::SpawnGrid()
 {
-	float rowSize = GridTiles / GridHeight;
+	float columnSize = GridTiles / GridWidth;
 	float compareNum = 1;
-	int xLocation = 0;
-	int yLocation = 1;
+	int yyLocation = 0;
+	int xxLocation = 1;
 	
 	FVector spawnPos = FVector(0.f, 0.f, 0.f);
 	for (float i = 1; i <= GridTiles; i++)
 	{
-		if ( (i / rowSize) == compareNum) //new row
+		if ( (i / columnSize) == compareNum) //new row
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("%f"),rowSize);
 			//UE_LOG(LogTemp, Warning, TEXT("%f"),i);
 			AGridComponent* createdGrid = GetWorld()->SpawnActor<AGridComponent>
 				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator  );
 			ChangeColor(createdGrid);
+			createdGrid->SetFolderPath(FName("Grid"));
 			spawnPos.Y += 100;
 			spawnPos.X = 0;
 			GridArray.Add(createdGrid);
 			compareNum++;
-			xLocation++;
-			createdGrid->SetXLocaton(xLocation);
-			createdGrid->SetYLocaton(yLocation);
+			yyLocation++;
+			createdGrid->SetYYLocaton(yyLocation);
+			createdGrid->SetXXLocaton(xxLocation);
 			//for next spawn
-			xLocation = 0;
-			yLocation++;
+			yyLocation = 0;
+			xxLocation++;
 		}
 		else //continue row
 		{
 			AGridComponent* createdGrid = GetWorld()->SpawnActor<AGridComponent>
 				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator  );
 			ChangeColor(createdGrid);
+			createdGrid->SetFolderPath(FName("Grid"));
 			spawnPos.X -= 100;
 			GridArray.Add(createdGrid);
-			xLocation++;
-			createdGrid->SetXLocaton(xLocation);
-			createdGrid->SetYLocaton(yLocation);
+			yyLocation++;
+			createdGrid->SetYYLocaton(yyLocation);
+			createdGrid->SetXXLocaton(xxLocation);
 			
 		}
 	}
@@ -101,9 +106,9 @@ void ASpawnManager::SpawnEnemies()
 	//start spawning off to the side of the grid
 	FVector spawnPos = FVector(0, 0.f, 50.f);
 	
-	float offset = (GridHeight / NumberSpawned) * 100;
-	int32 xLocation = 1;
-	int32 yLocation = 1;
+	float offset = (GridWidth / NumberSpawned) * 100;
+	int32 yyLocation = 1;
+	int32 xxLocation = 1;
 	
 	for (int i = 1; i <= NumberSpawned; i++)
 	{
@@ -111,12 +116,17 @@ void ASpawnManager::SpawnEnemies()
 				(EnemyToSpawn, spawnPos, FRotator::ZeroRotator  );
 		EnemyArray.Add(createdEnemy);
 		spawnPos.Y += offset;
-		createdEnemy->XLocation = xLocation;
-		createdEnemy->YLocation = yLocation;
-		xLocation += offset/100;
-		
+		createdEnemy->XLocation = yyLocation;
+		createdEnemy->YLocation = xxLocation;
+		yyLocation += offset/100;
 	}
-	
-	
 }
 
+void ASpawnManager::SpawnPlayer()
+{
+	FVector spawnPos = FVector(100.f, 0.f, 50.f);
+	spawnPos.X -= (GridTiles / GridWidth) * 100;
+	spawnPos.Y += (GridWidth / 2) * 100;
+	//spawn player
+	CurrentPlayer = GetWorld()->SpawnActor<AMainCharacter>(PlayerToSpawn, spawnPos, FRotator::ZeroRotator );
+}

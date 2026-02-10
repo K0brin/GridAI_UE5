@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SpawnManager.h"
 #include "Engine/GameInstance.h"
 #include "GameManager.generated.h"
+
+class ASpawnManager;
+class ATurnManager;
 
 /**
  * 
@@ -22,6 +24,12 @@ public:
 	UGameManager();
 	UFUNCTION(BlueprintCallable) void CreateSpawnManager();
 	UFUNCTION(BlueprintCallable) void DeleteSpawnManager();
+	UFUNCTION(BlueprintCallable) void CreateTurnManager();
+	UFUNCTION(BlueprintCallable) void DeleteTurnManager();
 	UPROPERTY(EditAnywhere, Category = "Managers") TSubclassOf<AActor> spawnManagerToSpawn;
+	UPROPERTY(EditAnywhere, Category = "Managers") TSubclassOf<AActor> turnManagerToSpawn;
+	
+	UPROPERTY() ASpawnManager* ActiveSpawnManager;
+	UPROPERTY() ATurnManager* ActiveTurnManager;
 	
 };

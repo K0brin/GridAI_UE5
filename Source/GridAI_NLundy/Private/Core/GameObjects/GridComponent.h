@@ -16,17 +16,17 @@ public:
 	AGridComponent();
 	//size of scale x,y
 	UFUNCTION(BlueprintCallable) void SetTileScale();
-	UFUNCTION(BlueprintCallable) void SetXLocaton(int32 value);
-	UFUNCTION(BlueprintCallable) void SetYLocaton(int32 value);
-	UFUNCTION(BlueprintCallable) int32 GetXLocaton();
-	UFUNCTION(BlueprintCallable) int32 GetYLocaton();
+	UFUNCTION(BlueprintCallable) void SetXXLocaton(int32 value);
+	UFUNCTION(BlueprintCallable) void SetYYLocaton(int32 value);
+	UFUNCTION(BlueprintCallable) int32 GetYYLocaton();
+	UFUNCTION(BlueprintCallable) int32 GetXXLocaton();
 	
 	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileWidth = 1;
 	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileHeight = 0.25;
 	
 private:
-	UPROPERTY(VisibleAnywhere) int32 XLocation  = 0;
-	UPROPERTY(VisibleAnywhere) int32 YLocation  = 0;
+	UPROPERTY(VisibleAnywhere) int32 XXLocation  = 0;
+	UPROPERTY(VisibleAnywhere) int32 YYLocation  = 0;
 	
 
 protected:
