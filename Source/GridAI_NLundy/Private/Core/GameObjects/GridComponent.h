@@ -15,9 +15,19 @@ public:
 	// Sets default values for this actor's properties
 	AGridComponent();
 	//size of scale x,y
+	UFUNCTION(BlueprintCallable) void SetTileScale();
+	UFUNCTION(BlueprintCallable) void SetXLocaton(int32 value);
+	UFUNCTION(BlueprintCallable) void SetYLocaton(int32 value);
+	UFUNCTION(BlueprintCallable) int32 GetXLocaton();
+	UFUNCTION(BlueprintCallable) int32 GetYLocaton();
+	
 	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileWidth = 1;
 	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileHeight = 0.25;
-	UFUNCTION(BlueprintCallable) void SetTileScale();
+	
+private:
+	UPROPERTY(VisibleAnywhere) int32 XLocation  = 0;
+	UPROPERTY(VisibleAnywhere) int32 YLocation  = 0;
+	
 
 protected:
 	// Called when the game starts or when spawned

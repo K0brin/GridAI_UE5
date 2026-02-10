@@ -3,6 +3,8 @@
 
 #include "Core/Systems/Managers/SpawnManager.h"
 #include "Components/StaticMeshComponent.h"
+#include "Core/GameObjects/Enemy.h"
+#include "Core/GameObjects/GridComponent.h"
 
 // Sets default values
 ASpawnManager::ASpawnManager()
@@ -30,29 +32,41 @@ void ASpawnManager::SpawnGrid()
 {
 	float rowSize = GridTiles / GridHeight;
 	float compareNum = 1;
+	int xLocation = 0;
+	int yLocation = 1;
 	
 	FVector spawnPos = FVector(0.f, 0.f, 0.f);
 	for (float i = 1; i <= GridTiles; i++)
 	{
-		if ( (i / rowSize) == compareNum)
+		if ( (i / rowSize) == compareNum) //new row
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("%f"),rowSize);
 			//UE_LOG(LogTemp, Warning, TEXT("%f"),i);
-			AActor* createdGrid = GetWorld()->SpawnActor<AActor>
+			AGridComponent* createdGrid = GetWorld()->SpawnActor<AGridComponent>
 				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator  );
 			ChangeColor(createdGrid);
 			spawnPos.Y += 100;
 			spawnPos.X = 0;
 			GridArray.Add(createdGrid);
 			compareNum++;
+			xLocation++;
+			createdGrid->SetXLocaton(xLocation);
+			createdGrid->SetYLocaton(yLocation);
+			//for next spawn
+			xLocation = 0;
+			yLocation++;
 		}
-		else
+		else //continue row
 		{
-			AActor* createdGrid = GetWorld()->SpawnActor<AActor>
+			AGridComponent* createdGrid = GetWorld()->SpawnActor<AGridComponent>
 				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator  );
 			ChangeColor(createdGrid);
-			spawnPos.X += 100;
+			spawnPos.X -= 100;
 			GridArray.Add(createdGrid);
+			xLocation++;
+			createdGrid->SetXLocaton(xLocation);
+			createdGrid->SetYLocaton(yLocation);
+			
 		}
 	}
 	
@@ -85,14 +99,21 @@ void ASpawnManager::ChangeColor(AActor* actorToChange)
 void ASpawnManager::SpawnEnemies()
 {
 	//start spawning off to the side of the grid
-	FVector spawnPos = FVector(-100.f, 0.f, 50.f);
+	FVector spawnPos = FVector(0, 0.f, 50.f);
+	
+	float offset = (GridHeight / NumberSpawned) * 100;
+	int32 xLocation = 1;
+	int32 yLocation = 1;
 	
 	for (int i = 1; i <= NumberSpawned; i++)
 	{
-		AActor* createdEnemy = GetWorld()->SpawnActor<AActor>
+		AEnemy* createdEnemy = GetWorld()->SpawnActor<AEnemy>
 				(EnemyToSpawn, spawnPos, FRotator::ZeroRotator  );
 		EnemyArray.Add(createdEnemy);
-		spawnPos.X -= 100;
+		spawnPos.Y += offset;
+		createdEnemy->XLocation = xLocation;
+		createdEnemy->YLocation = yLocation;
+		xLocation += offset/100;
 		
 	}
 	
