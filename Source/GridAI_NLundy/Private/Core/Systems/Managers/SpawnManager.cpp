@@ -115,6 +115,7 @@ void ASpawnManager::SpawnEnemies()
 		AEnemy* createdEnemy = GetWorld()->SpawnActor<AEnemy>
 				(EnemyToSpawn, spawnPos, FRotator::ZeroRotator  );
 		EnemyArray.Add(createdEnemy);
+		createdEnemy->SetFolderPath(FName("Enemies"));
 		spawnPos.Y += offset;
 		createdEnemy->XLocation = yyLocation;
 		createdEnemy->YLocation = xxLocation;
@@ -129,4 +130,7 @@ void ASpawnManager::SpawnPlayer()
 	spawnPos.Y += (GridWidth / 2) * 100;
 	//spawn player
 	CurrentPlayer = GetWorld()->SpawnActor<AMainCharacter>(PlayerToSpawn, spawnPos, FRotator::ZeroRotator );
+	CurrentPlayer->SetFolderPath(FName("PlayerCharacter"));
+	CurrentPlayer->XLocation = (spawnPos.Y / 100) + 1;
+	CurrentPlayer->YLocation = FMath::Abs((spawnPos.X - 100)/100); 
 }
