@@ -51,7 +51,7 @@ void ATurnManager::CalculateFormation()
 
 void ATurnManager::TakeEnemyTurn()
 {
-	//if too close to player Run(); else Move()
+	//if too close to player !Run(); else Move()
 }
 
 void ATurnManager::TakePlayerTurn()

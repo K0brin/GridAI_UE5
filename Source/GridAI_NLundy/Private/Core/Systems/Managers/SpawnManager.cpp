@@ -96,7 +96,7 @@ void ASpawnManager::ChangeColor(AActor* actorToChange)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Actor %s has no Static Mesh Component!"), *actorToChange->GetName());
+		
 	}
 	
 }
@@ -113,7 +113,7 @@ void ASpawnManager::SpawnEnemies()
 	for (int i = 1; i <= NumberSpawned; i++)
 	{
 		AEnemy* createdEnemy = GetWorld()->SpawnActor<AEnemy>
-				(EnemyToSpawn, spawnPos, FRotator::ZeroRotator  );
+				(EnemyToSpawn, spawnPos, FRotator::ZeroRotator);
 		EnemyArray.Add(createdEnemy);
 		createdEnemy->SetFolderPath(FName("Enemies"));
 		spawnPos.Y += offset;

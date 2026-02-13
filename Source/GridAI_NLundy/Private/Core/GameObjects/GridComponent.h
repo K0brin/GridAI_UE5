@@ -6,6 +6,20 @@
 #include "GameFramework/Actor.h"
 #include "GridComponent.generated.h"
 
+USTRUCT()
+struct FSlotData
+{
+	GENERATED_BODY()
+	
+public:
+	UPROPERTY() FVector WorldLocation;
+	UPROPERTY() FVector2D RelativeLocation;
+	UPROPERTY() bool SlotIsFull;
+	
+	
+};
+
+
 UCLASS()
 class AGridComponent : public AActor
 {
