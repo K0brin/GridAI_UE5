@@ -6,17 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "GridComponent.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FSlotData
 {
 	GENERATED_BODY()
 	
-public:
 	UPROPERTY() FVector WorldLocation;
-	UPROPERTY() FVector2D RelativeLocation;
-	UPROPERTY() bool SlotIsFull;
-	
-	
+	UPROPERTY(VisibleAnywhere) FVector2D RelativeLocation;
+	UPROPERTY(VisibleAnywhere) bool SlotIsFull;
 };
 
 
@@ -30,17 +27,12 @@ public:
 	AGridComponent();
 	//size of scale x,y
 	UFUNCTION(BlueprintCallable) void SetTileScale();
-	UFUNCTION(BlueprintCallable) void SetXXLocaton(int32 value);
-	UFUNCTION(BlueprintCallable) void SetYYLocaton(int32 value);
-	UFUNCTION(BlueprintCallable) int32 GetYYLocaton();
-	UFUNCTION(BlueprintCallable) int32 GetXXLocaton();
 	
 	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileWidth = 1;
 	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileHeight = 0.25;
+	UPROPERTY(VisibleAnywhere) FSlotData GridSlotData;
 	
 private:
-	UPROPERTY(VisibleAnywhere) int32 XXLocation  = 0;
-	UPROPERTY(VisibleAnywhere) int32 YYLocation  = 0;
 	
 
 protected:

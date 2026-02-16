@@ -6,6 +6,7 @@
 #include "Core/GameObjects/Enemy.h"
 #include "Core/GameObjects/GridComponent.h"
 #include "Core/GameObjects/MainCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ASpawnManager::ASpawnManager()
@@ -35,30 +36,28 @@ void ASpawnManager::SpawnGrid()
 {
 	float columnSize = GridTiles / GridWidth;
 	float compareNum = 1;
-	int yyLocation = 0;
-	int xxLocation = 1;
+	FVector2D relativeLocation = FVector2D(1,1);
+	//int yyLocation = 0;
+	//int xxLocation = 1;
 	
 	FVector spawnPos = FVector(0.f, 0.f, 0.f);
 	for (float i = 1; i <= GridTiles; i++)
 	{
 		if ( (i / columnSize) == compareNum) //new row
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("%f"),rowSize);
-			//UE_LOG(LogTemp, Warning, TEXT("%f"),i);
 			AGridComponent* createdGrid = GetWorld()->SpawnActor<AGridComponent>
-				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator  );
+				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator);
 			ChangeColor(createdGrid);
 			createdGrid->SetFolderPath(FName("Grid"));
+			GridArray.Add(createdGrid);
+			relativeLocation.Y++;
+			SetGridSlotData(createdGrid, spawnPos, relativeLocation);
+			//for next spawn
+			relativeLocation.Y = 0;
+			relativeLocation.X++;
 			spawnPos.Y += 100;
 			spawnPos.X = 0;
-			GridArray.Add(createdGrid);
 			compareNum++;
-			yyLocation++;
-			createdGrid->SetYYLocaton(yyLocation);
-			createdGrid->SetXXLocaton(xxLocation);
-			//for next spawn
-			yyLocation = 0;
-			xxLocation++;
 		}
 		else //continue row
 		{
@@ -66,14 +65,22 @@ void ASpawnManager::SpawnGrid()
 				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator  );
 			ChangeColor(createdGrid);
 			createdGrid->SetFolderPath(FName("Grid"));
-			spawnPos.X -= 100;
 			GridArray.Add(createdGrid);
-			yyLocation++;
-			createdGrid->SetYYLocaton(yyLocation);
-			createdGrid->SetXXLocaton(xxLocation);
+			relativeLocation.Y++;
+			SetGridSlotData(createdGrid, spawnPos, relativeLocation);
+			spawnPos.X -= 100;
 			
 		}
 	}
+	
+}
+
+void ASpawnManager::SetGridSlotData(AGridComponent* gridObject, FVector worldLocation, FVector2D relativeLocation)
+{
+	
+	gridObject->GridSlotData.WorldLocation = worldLocation;
+	gridObject->GridSlotData.RelativeLocation = relativeLocation;
+	gridObject->GridSlotData.SlotIsFull = false;
 	
 }
 
@@ -107,8 +114,7 @@ void ASpawnManager::SpawnEnemies()
 	FVector spawnPos = FVector(0, 0.f, 50.f);
 	
 	float offset = (GridWidth / NumberSpawned) * 100;
-	int32 yyLocation = 1;
-	int32 xxLocation = 1;
+	//FVector2D xyLocation = FVector2D(1,1);
 	
 	for (int i = 1; i <= NumberSpawned; i++)
 	{
@@ -117,10 +123,18 @@ void ASpawnManager::SpawnEnemies()
 		EnemyArray.Add(createdEnemy);
 		createdEnemy->SetFolderPath(FName("Enemies"));
 		spawnPos.Y += offset;
-		createdEnemy->XLocation = yyLocation;
-		createdEnemy->YLocation = xxLocation;
-		yyLocation += offset/100;
+		SetEnemyLocation(createdEnemy);
+		//xyLocation.Y += offset/100;
 	}
+}
+
+void ASpawnManager::SetEnemyLocation(AEnemy* spawnedEnemy)
+{
+	float distance = 0;
+	AActor* closestActor = UGameplayStatics::FindNearestActor(spawnedEnemy->GetActorLocation(), GridArray, distance);
+	AGridComponent* closestGridComponent = Cast<AGridComponent>(closestActor);
+	
+	spawnedEnemy->XYLocation = closestGridComponent->GridSlotData.RelativeLocation;
 }
 
 void ASpawnManager::SpawnPlayer()

@@ -31,24 +31,4 @@ void AGridComponent::SetTileScale()
 	SetActorScale3D(FVector(tileWidth, tileWidth, tileHeight));
 }
 
-void AGridComponent::SetXXLocaton(int32 value)
-{
-	XXLocation = value;
-}
-
-void AGridComponent::SetYYLocaton(int32 value)
-{
-	YYLocation = value;
-}
-
-int32 AGridComponent::GetXXLocaton()
-{
-	return XXLocation;
-}
-
-int32 AGridComponent::GetYYLocaton()
-{
-	return YYLocation;
-}
-
 

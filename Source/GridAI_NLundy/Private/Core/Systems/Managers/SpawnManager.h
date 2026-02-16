@@ -22,6 +22,7 @@ public:
 	//_________________________________________GRID_SPAWNING___________________________________________
 	UFUNCTION(BlueprintCallable, Category = "Grid_Spawning") void SpawnGrid();
 	UFUNCTION(BlueprintCallable, Category = "Grid_Spawning") void ChangeColor(AActor* actorToChange);
+	UFUNCTION(BlueprintCallable) void SetGridSlotData(AGridComponent* gridObject, FVector worldLocation, FVector2D relativeLocation);
 	
 	UPROPERTY(EditAnywhere, Category = "Grid_Spawning") TSubclassOf<AActor> gridComponentToSpawn;
 	UPROPERTY(EditAnywhere, Category = "Grid_Spawning") TArray<AActor*> GridArray;
@@ -33,6 +34,7 @@ public:
 	
 	//________________________________________ENEMY_SPAWNING_______________________________________________
 	UFUNCTION(BlueprintCallable, Category = "Enemy_Spawning") void SpawnEnemies();
+	UFUNCTION(BlueprintCallable, Category = "Enemy_Spawning") void SetEnemyLocation(AEnemy* spawnedEnemy);
 	
 	UPROPERTY(EditAnywhere, Category = "Enemy_Spawning") TSubclassOf<AActor> EnemyToSpawn;
 	UPROPERTY(EditAnywhere, Category = "Enemy_Spawning") int NumberSpawned;
