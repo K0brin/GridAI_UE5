@@ -34,7 +34,7 @@ public:
 	
 	//________________________________________ENEMY_SPAWNING_______________________________________________
 	UFUNCTION(BlueprintCallable, Category = "Enemy_Spawning") void SpawnEnemies();
-	UFUNCTION(BlueprintCallable, Category = "Enemy_Spawning") void SetEnemyLocation(AEnemy* spawnedEnemy);
+	UFUNCTION(BlueprintCallable, Category = "Enemy_Spawning") void SetNewLocation(AActor* movingActor, TSubclassOf<AActor> inputClass);
 	
 	UPROPERTY(EditAnywhere, Category = "Enemy_Spawning") TSubclassOf<AActor> EnemyToSpawn;
 	UPROPERTY(EditAnywhere, Category = "Enemy_Spawning") int NumberSpawned;

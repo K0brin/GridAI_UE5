@@ -15,8 +15,7 @@ public:
 	// Sets default values for this actor's properties
 	AMainCharacter();
 	
-	UPROPERTY(VisibleAnywhere) int32 XLocation = 0;
-	UPROPERTY(VisibleAnywhere) int32 YLocation = 0;
+	UPROPERTY(VisibleAnywhere) FVector2D XYLocation = FVector2D(0,0);
 
 protected:
 	// Called when the game starts or when spawned

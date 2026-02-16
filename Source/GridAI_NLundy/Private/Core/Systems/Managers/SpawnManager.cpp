@@ -125,19 +125,9 @@ void ASpawnManager::SpawnEnemies()
 		EnemyArray.Add(createdEnemy);
 		createdEnemy->SetFolderPath(FName("Enemies"));
 		spawnPos.Y += offset;
-		SetEnemyLocation(createdEnemy);
+		SetNewLocation(createdEnemy, AEnemy::StaticClass());
 		//xyLocation.Y += offset/100;
 	}
-}
-
-void ASpawnManager::SetEnemyLocation(AEnemy* spawnedEnemy)
-{
-	float distance = 0;
-	AActor* closestActor = UGameplayStatics::FindNearestActor(spawnedEnemy->GetActorLocation(), GridArray, distance);
-	AGridComponent* closestGridComponent = Cast<AGridComponent>(closestActor);
-	
-	spawnedEnemy->XYLocation = closestGridComponent->GridSlotData.RelativeLocation;
-	closestGridComponent->GridSlotData.SlotIsFull = true;
 }
 
 void ASpawnManager::SpawnPlayer()
@@ -148,6 +138,30 @@ void ASpawnManager::SpawnPlayer()
 	//spawn player
 	CurrentPlayer = GetWorld()->SpawnActor<AMainCharacter>(PlayerToSpawn, spawnPos, FRotator::ZeroRotator );
 	CurrentPlayer->SetFolderPath(FName("PlayerCharacter"));
-	CurrentPlayer->XLocation = (spawnPos.Y / 100) + 1;
-	CurrentPlayer->YLocation = FMath::Abs((spawnPos.X - 100)/100); 
+	SetNewLocation(CurrentPlayer, AMainCharacter::StaticClass());
+	//CurrentPlayer->XLocation = (spawnPos.Y / 100) + 1;
+	//CurrentPlayer->YLocation = FMath::Abs((spawnPos.X - 100)/100); 
+}
+
+void ASpawnManager::SetNewLocation(AActor* movingActor, TSubclassOf<AActor> inputSubclass)
+{
+	//Getting Grid Component
+	float distance = 0;
+	AActor* closestActor = UGameplayStatics::FindNearestActor(movingActor->GetActorLocation(), GridArray, distance);
+	AGridComponent* closestGridComponent = Cast<AGridComponent>(closestActor);
+	
+	//Getting Input Actor Component
+	if (inputSubclass == AMainCharacter::StaticClass())
+	{
+		AMainCharacter* inputActor = Cast<AMainCharacter>(movingActor);
+		inputActor->XYLocation = closestGridComponent->GridSlotData.RelativeLocation;
+		closestGridComponent->GridSlotData.SlotIsFull = true;
+	}
+	else if (inputSubclass == AEnemy::StaticClass())
+	{
+		AEnemy* inputActor = Cast<AEnemy>(movingActor);
+		inputActor->XYLocation = closestGridComponent->GridSlotData.RelativeLocation;
+		closestGridComponent->GridSlotData.SlotIsFull = true;
+		
+	}
 }
