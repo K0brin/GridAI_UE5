@@ -36,15 +36,16 @@ void ASpawnManager::SpawnGrid()
 {
 	float columnSize = GridTiles / GridWidth;
 	float compareNum = 1;
-	FVector2D relativeLocation = FVector2D(1,1);
+	FVector2D relativeLocation = FVector2D(1,0);
 	//int yyLocation = 0;
 	//int xxLocation = 1;
 	
 	FVector spawnPos = FVector(0.f, 0.f, 0.f);
 	for (float i = 1; i <= GridTiles; i++)
 	{
-		if ( (i / columnSize) == compareNum) //new row
+		if ( (i / columnSize) == compareNum) //last of row
 		{
+			//UE_LOG(LogTemp, Warning, TEXT("Hello"));
 			AGridComponent* createdGrid = GetWorld()->SpawnActor<AGridComponent>
 				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator);
 			ChangeColor(createdGrid);
@@ -59,8 +60,9 @@ void ASpawnManager::SpawnGrid()
 			spawnPos.X = 0;
 			compareNum++;
 		}
-		else //continue row
+		else //start/continue row
 		{
+			//UE_LOG(LogTemp, Warning, TEXT("Two"));
 			AGridComponent* createdGrid = GetWorld()->SpawnActor<AGridComponent>
 				(gridComponentToSpawn, spawnPos, FRotator::ZeroRotator  );
 			ChangeColor(createdGrid);
@@ -135,6 +137,7 @@ void ASpawnManager::SetEnemyLocation(AEnemy* spawnedEnemy)
 	AGridComponent* closestGridComponent = Cast<AGridComponent>(closestActor);
 	
 	spawnedEnemy->XYLocation = closestGridComponent->GridSlotData.RelativeLocation;
+	closestGridComponent->GridSlotData.SlotIsFull = true;
 }
 
 void ASpawnManager::SpawnPlayer()
