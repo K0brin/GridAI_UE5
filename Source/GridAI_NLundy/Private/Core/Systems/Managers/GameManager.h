@@ -26,6 +26,8 @@ public:
 	UFUNCTION(BlueprintCallable) void DeleteSpawnManager();
 	UFUNCTION(BlueprintCallable) void CreateTurnManager();
 	UFUNCTION(BlueprintCallable) void DeleteTurnManager();
+	UFUNCTION(BlueprintCallable) void SpawnGrid();
+	UFUNCTION(BlueprintCallable) void SetNumEnemy(int num);
 	UPROPERTY(EditAnywhere, Category = "Managers") TSubclassOf<AActor> spawnManagerToSpawn;
 	UPROPERTY(EditAnywhere, Category = "Managers") TSubclassOf<AActor> turnManagerToSpawn;
 	

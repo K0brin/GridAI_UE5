@@ -16,14 +16,18 @@ ASpawnManager::ASpawnManager()
 }
 
 
+void ASpawnManager::GenerateGrid()
+{
+	SpawnGrid();
+	SpawnEnemies();
+	SpawnPlayer();
+}
+
 // Called when the game starts or when spawned
 void ASpawnManager::BeginPlay()
 {
 	Super::BeginPlay();
 	ColorNum = 1.f;
-	SpawnGrid();
-	SpawnEnemies();
-	SpawnPlayer();
 }
 
 // Called every frame

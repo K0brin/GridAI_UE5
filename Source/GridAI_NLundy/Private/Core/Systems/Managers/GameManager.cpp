@@ -43,3 +43,13 @@ void UGameManager::DeleteTurnManager()
 {
 }
 
+void UGameManager::SpawnGrid()
+{
+	ActiveSpawnManager->GenerateGrid();
+}
+
+void UGameManager::SetNumEnemy(int num)
+{
+	ActiveSpawnManager->NumberSpawned = num;
+}
+

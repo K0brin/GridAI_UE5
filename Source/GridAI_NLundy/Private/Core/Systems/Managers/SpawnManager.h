@@ -46,6 +46,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Player_Spawning") TSubclassOf<AActor> PlayerToSpawn;
 	UPROPERTY() AMainCharacter* CurrentPlayer;
 	
+	UFUNCTION(BlueprintCallable) void GenerateGrid();
+	
 	
 
 protected:
