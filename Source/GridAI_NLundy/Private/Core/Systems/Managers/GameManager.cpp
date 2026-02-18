@@ -53,3 +53,8 @@ void UGameManager::SetNumEnemy(int num)
 	ActiveSpawnManager->NumberSpawned = num;
 }
 
+void UGameManager::SetGridWidth(float num)
+{
+	ActiveSpawnManager->GridWidth = num;
+}
+
