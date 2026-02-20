@@ -15,8 +15,21 @@ void UGameManager::Init()
 {
 	Super::Init();
 	
-	CreateSpawnManager();
-	CreateTurnManager();
+	//CreateSpawnManager();
+	//CreateTurnManager();
+}
+
+void UGameManager::OnStart()
+{
+	Super::OnStart();
+	
+	/*UWorld* World = GetWorld();
+	
+	if (World)
+	{
+		CreateSpawnManager();
+		CreateTurnManager();
+	}*/
 }
 
 void UGameManager::CreateSpawnManager()
@@ -41,6 +54,7 @@ void UGameManager::CreateTurnManager()
 
 void UGameManager::DeleteTurnManager()
 {
+	
 }
 
 void UGameManager::SpawnGrid()
@@ -57,4 +71,5 @@ void UGameManager::SetGridWidth(float num)
 {
 	ActiveSpawnManager->GridWidth = num;
 }
+
 

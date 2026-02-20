@@ -16,7 +16,7 @@ ATurnManager::ATurnManager()
 void ATurnManager::BeginPlay()
 {
 	Super::BeginPlay();
-	CurrentPlayer = SpawnManager->CurrentPlayer;
+	//CurrentPlayer = SpawnManager->CurrentPlayer;
 	//Spawn Button For Start - when button pressed call NextTurn();
 }
 

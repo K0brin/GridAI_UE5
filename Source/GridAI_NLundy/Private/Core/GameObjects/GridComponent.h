@@ -12,7 +12,7 @@ struct FSlotData
 	GENERATED_BODY()
 	
 	UPROPERTY() FVector WorldLocation;
-	UPROPERTY(VisibleAnywhere) FVector2D RelativeLocation;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly) FVector2D RelativeLocation;
 	UPROPERTY(VisibleAnywhere) bool SlotIsFull;
 };
 
@@ -30,7 +30,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileWidth = 1;
 	UPROPERTY(EditAnywhere, Category = "Tile Transforms") double tileHeight = 0.25;
-	UPROPERTY(VisibleAnywhere) FSlotData GridSlotData;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite) FSlotData GridSlotData;
 	
 private:
 	

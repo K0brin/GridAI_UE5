@@ -1,27 +1,22 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/GameInstance.h"
-#include "GameManager.generated.h"
+#include "GameFramework/Actor.h"
+#include "MockGameManager.generated.h"
 
 class ASpawnManager;
 class ATurnManager;
 
-/**
- * 
- */
 UCLASS()
-class GRIDAI_NLUNDY_API UGameManager : public UGameInstance
+class AMockGameManager : public AActor
 {
 	GENERATED_BODY()
 	
-protected:
-	virtual void Init() override;
-	
-public:
-	UGameManager();
+public:	
+	// Sets default values for this actor's properties
+	AMockGameManager();
 	UFUNCTION(BlueprintCallable) void CreateSpawnManager();
 	UFUNCTION(BlueprintCallable) void DeleteSpawnManager();
 	UFUNCTION(BlueprintCallable) void CreateTurnManager();
@@ -34,8 +29,13 @@ public:
 	
 	UPROPERTY() ASpawnManager* ActiveSpawnManager;
 	UPROPERTY() ATurnManager* ActiveTurnManager;
-	
-private:
-	virtual void OnStart() override;
-	
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 };
