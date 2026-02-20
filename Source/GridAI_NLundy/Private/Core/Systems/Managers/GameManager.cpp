@@ -22,7 +22,7 @@ void UGameManager::Init()
 void UGameManager::CreateSpawnManager()
 {
 	ActiveSpawnManager = GetWorld()->SpawnActor<ASpawnManager>(spawnManagerToSpawn, FVector (0.f, 0.f, 0.f), FRotator::ZeroRotator  );
-	ActiveSpawnManager->SetFolderPath(FName("Managers"));
+	//ActiveSpawnManager->SetFolderPath(FName("Managers"));
 	UE_LOG(LogTemp, Warning, TEXT("CreatedSpawnManager"));
 }
 
@@ -34,7 +34,7 @@ void UGameManager::DeleteSpawnManager()
 void UGameManager::CreateTurnManager()
 {
 	ActiveTurnManager = GetWorld()->SpawnActor<ATurnManager>(turnManagerToSpawn, FVector (0.f, 0.f, 0.f), FRotator::ZeroRotator  );
-	ActiveTurnManager->SetFolderPath(FName("Managers"));
+	//ActiveTurnManager->SetFolderPath(FName("Managers"));
 	ActiveTurnManager->SpawnManager = ActiveSpawnManager;
 	UE_LOG(LogTemp, Warning, TEXT("CreatedTurnManager"));
 }
